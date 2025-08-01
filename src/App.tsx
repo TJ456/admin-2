@@ -3,6 +3,7 @@ import SignIn from "./pages/AuthPages/SignIn";
 import SignUp from "./pages/AuthPages/SignUp";
 import NotFound from "./pages/OtherPage/NotFound";
 import Calendar from "./pages/Calendar";
+import Academics from "./pages/Academics";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
@@ -18,9 +19,10 @@ export default function App() {
           {/* Redirect root to signin for LMS */}
           <Route index path="/" element={<Navigate to="/signin" replace />} />
 
-          {/* Dashboard Layout - Dashboard, Calendar, and Student Management for LMS */}
+          {/* Dashboard Layout - Dashboard, Academics, and Student Management for LMS */}
           <Route element={<AppLayout />}>
             <Route path="/dashboard" element={<Home />} />
+            <Route path="/academics" element={<Academics />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/students/:deptId" element={<StudentPage />} />
             <Route path="/students" element={<Navigate to="/students/it" replace />} />

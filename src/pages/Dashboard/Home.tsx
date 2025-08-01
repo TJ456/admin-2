@@ -35,7 +35,7 @@ export default function Home() {
                 </div>
                 <div className="text-right">
                   <h3 className="text-3xl font-bold text-black dark:text-white">5</h3>
-                  <p className="text-sm font-medium text-body dark:text-bodydark">Total Department</p>
+                  <p className="text-sm font-medium text-body dark:text-bodydark">Batches</p>
                 </div>
               </div>
               <div className="mt-4 flex items-center">

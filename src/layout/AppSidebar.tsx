@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-// Only import icons needed for LMS - Dashboard and Calendar
+// Only import icons needed for LMS - Dashboard and Academics
 import {
-  CalenderIcon,
+  DocsIcon,
   GridIcon,
   HorizontaLDots,
   GroupIcon,
@@ -25,9 +25,9 @@ const navItems: NavItem[] = [
     path: "/dashboard",
   },
   {
-    icon: <CalenderIcon />,
-    name: "Calendar",
-    path: "/calendar",
+    icon: <DocsIcon />,
+    name: "Academics",
+    path: "/academics",
   },
   {
     icon: <UserIcon />,

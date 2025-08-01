@@ -11,41 +11,90 @@ export default function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [loginError, setLoginError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Gmail validation function
-  const validateGmail = (email: string): boolean => {
-    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-    return gmailRegex.test(email);
+  // Email validation function
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailValue = e.target.value;
     setEmail(emailValue);
     
-    if (emailValue && !validateGmail(emailValue)) {
-      setEmailError("Please enter a valid Gmail address (example@gmail.com)");
+    if (emailValue && !validateEmail(emailValue)) {
+      setEmailError("Please enter a valid email address");
     } else {
       setEmailError("");
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate Gmail before submission
-    if (!validateGmail(email)) {
-      setEmailError("Please enter a valid Gmail address (example@gmail.com)");
+    // Validate email before submission
+    if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email address");
       return;
     }
     
     if (!password.trim()) {
+      setLoginError("Password is required");
       return;
     }
     
-    // Here you would typically handle authentication
-    // For now, we'll just navigate to the dashboard
-    navigate("/dashboard");
+    setIsLoading(true);
+    setLoginError("");
+    
+    try {
+      const response = await fetch("http://43.204.212.86/department/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        // Login successful
+        console.log("Login successful:", data);
+        
+        // Store user data if provided in response
+        if (data.token) {
+          localStorage.setItem("authToken", data.token);
+        }
+        if (data.user) {
+          localStorage.setItem("user", JSON.stringify(data.user));
+        }
+        
+        // Navigate to dashboard
+        navigate("/dashboard");
+      } else {
+        // Login failed
+        if (data.non_field_errors) {
+          setLoginError(data.non_field_errors[0]);
+        } else if (data.email) {
+          setEmailError(data.email[0]);
+        } else if (data.password) {
+          setLoginError(data.password[0]);
+        } else {
+          setLoginError("Login failed. Please try again.");
+        }
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setLoginError("Network error. Please check your connection and try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <div className="flex flex-col flex-1">
@@ -66,7 +115,7 @@ export default function SignInForm() {
               Log In
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Enter your Gmail and password to sign in!
+              Enter your email and password to sign in!
             </p>
           </div>
           <div>
@@ -114,11 +163,11 @@ export default function SignInForm() {
               <div className="space-y-6">
                 <div>
                   <Label>
-                    Gmail Address <span className="text-error-500">*</span>{" "}
+                    Email Address <span className="text-error-500">*</span>{" "}
                   </Label>
                   <Input 
                     type="email"
-                    placeholder="example@gmail.com" 
+                    placeholder="example@infuni.edu" 
                     value={email}
                     onChange={handleEmailChange}
                     className={emailError ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : ""}
@@ -166,13 +215,25 @@ export default function SignInForm() {
                     Forgot password?
                   </Link>
                 </div>
+                {loginError && (
+                  <div className="p-3 mb-4 text-sm text-red-600 bg-red-50 dark:bg-red-900/20 dark:text-red-400 rounded-lg">
+                    {loginError}
+                  </div>
+                )}
                 <div>
                   <button 
                     type="submit" 
-                    disabled={!email || !password || !!emailError}
+                    disabled={!email || !password || !!emailError || isLoading}
                     className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
-                    Log in
+                    {isLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        Signing in...
+                      </>
+                    ) : (
+                      "Log in"
+                    )}
                   </button>
                 </div>
               </div>
