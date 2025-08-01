@@ -24,8 +24,8 @@ export default function Home() {
 
         {/* Quick Stats Cards */}
         <div className="col-span-12">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {/* Active Courses Card */}
+          <div className="grid grid-cols-4 gap-4 md:gap-6">
+            {/* Batches Card */}
             <div className="group rounded-lg border border-stroke bg-white p-6 shadow-default transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:border-strokedark dark:bg-boxdark">
               <div className="flex items-center justify-between">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg">
@@ -43,12 +43,12 @@ export default function Home() {
                   <svg className="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                 
+                  Active batches
                 </span>
               </div>
             </div>
 
-            {/* Pending Assignments Card */}
+            {/* Total Teachers Card */}
             <div className="group rounded-lg border border-stroke bg-white p-6 shadow-default transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:border-strokedark dark:bg-boxdark">
               <div className="flex items-center justify-between">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-orange-600 shadow-lg">
@@ -66,12 +66,12 @@ export default function Home() {
                   <svg className="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                   </svg>
-            
+                  Faculty members
                 </span>
               </div>
             </div>
 
-            {/* Overall GPA Card */}
+            {/* Total Students Card */}
             <div className="group rounded-lg border border-stroke bg-white p-6 shadow-default transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:border-strokedark dark:bg-boxdark">
               <div className="flex items-center justify-between">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-green-600 shadow-lg">
@@ -89,15 +89,15 @@ export default function Home() {
                   <svg className="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
                   </svg>
-                  
+                  Enrolled students
                 </span>
               </div>
             </div>
-          </div>
-           {/* Active Courses Card */}
+
+            {/* Total Programmes Card */}
             <div className="group rounded-lg border border-stroke bg-white p-6 shadow-default transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:border-strokedark dark:bg-boxdark">
               <div className="flex items-center justify-between">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-purple-600 shadow-lg">
                   <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
@@ -112,10 +112,11 @@ export default function Home() {
                   <svg className="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                 Programmes ongoing
+                  Programmes ongoing
                 </span>
               </div>
             </div>
+          </div>
         </div>
 
         {/* Quick Actions & Recent Activities */}
