@@ -52,7 +52,7 @@ export default function TeacherPage() {
         // setDepartments(data);
         
         setLoading(false);
-      } catch (err) {
+      } catch {
         setError('Failed to fetch teachers data');
         setLoading(false);
       }
