@@ -67,16 +67,27 @@ export default function SignInForm() {
         // Login successful
         console.log("Login successful:", data);
         
-        // Store user data if provided in response
-        if (data.token) {
-          localStorage.setItem("authToken", data.token);
+        // Store authentication tokens
+        if (data.access) {
+          localStorage.setItem("authToken", data.access);
         }
-        if (data.user) {
-          localStorage.setItem("user", JSON.stringify(data.user));
+        if (data.refresh) {
+          localStorage.setItem("refreshToken", data.refresh);
         }
         
-        // Navigate to dashboard
-        navigate("/dashboard");
+        // Store user data
+       const userInfo = {
+  username: data.username,
+  email: data.email,
+  message: data.message,
+  user_id: data.user_id,
+  related_id: data.related_id
+};
+
+localStorage.setItem("user", JSON.stringify(userInfo));
+        
+        // Navigate to dashboard (root path)
+        navigate("/");
       } else {
         // Login failed
         if (data.non_field_errors) {

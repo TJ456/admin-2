@@ -32,46 +32,7 @@ interface Department {
 export default function TeacherPage() {
   const { deptId } = useParams<{ deptId: string }>();
   const [departments] = useState<Department[]>([
-    // This is mock data - replace with actual API call
-    {
-      id: "it",
-      name: "IT",
-      fullName: "Information Technology",
-      teachers: [
-        {
-          id: 1,
-          name: "Dr. Amit Kumar",
-          email: "amit.kumar@infuni.edu",
-          mobile: "+91 9876543210",
-          department: "IT",
-          subjects: [
-            {
-              id: "cs101",
-              name: "Data Structures",
-              code: "CS101",
-              semester: 3,
-              credits: 4
-            },
-            {
-              id: "cs102",
-              name: "Algorithms",
-              code: "CS102",
-              semester: 4,
-              credits: 4
-            }
-          ],
-          designation: "Associate Professor",
-          qualification: "PhD in Computer Science",
-          joinDate: "2020-07-15"
-        }
-      ]
-    },
-    {
-      id: "ece",
-      name: "ECE",
-      fullName: "Electronics & Communication Engineering",
-      teachers: []
-    }
+    // This is mock data - replace with actual API
   ]);
 
   const [loading, setLoading] = useState(true);
