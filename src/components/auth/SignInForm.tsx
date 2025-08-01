@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "../../icons";
+import { EyeCloseIcon, EyeIcon } from "../../icons"; // Removed ChevronLeftIcon - no longer used
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Checkbox from "../form/input/Checkbox";
@@ -8,17 +8,49 @@ import Checkbox from "../form/input/Checkbox";
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
   const navigate = useNavigate();
+
+  // Gmail validation function
+  const validateGmail = (email: string): boolean => {
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    return gmailRegex.test(email);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const emailValue = e.target.value;
+    setEmail(emailValue);
+    
+    if (emailValue && !validateGmail(emailValue)) {
+      setEmailError("Please enter a valid Gmail address (example@gmail.com)");
+    } else {
+      setEmailError("");
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate Gmail before submission
+    if (!validateGmail(email)) {
+      setEmailError("Please enter a valid Gmail address (example@gmail.com)");
+      return;
+    }
+    
+    if (!password.trim()) {
+      return;
+    }
+    
     // Here you would typically handle authentication
     // For now, we'll just navigate to the dashboard
     navigate("/dashboard");
   };
   return (
     <div className="flex flex-col flex-1">
-      <div className="w-full max-w-md pt-10 mx-auto">
+      {/* Back to dashboard link - Commented Out */}
+      {/* <div className="w-full max-w-md pt-10 mx-auto">
         <Link
           to="/"
           className="inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
@@ -26,7 +58,7 @@ export default function SignInForm() {
           <ChevronLeftIcon className="size-5" />
           Back to dashboard
         </Link>
-      </div>
+      </div> */}
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
         <div>
           <div className="mb-5 sm:mb-8">
@@ -34,11 +66,12 @@ export default function SignInForm() {
               Log In
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Enter your email and password to sign in!
+              Enter your Gmail and password to sign in!
             </p>
           </div>
           <div>
-            <div className="flex justify-center">
+            {/* Google Login Button - Commented Out */}
+            {/* <div className="flex justify-center">
               <button className="inline-flex items-center justify-center gap-3 py-3 text-sm font-normal text-gray-700 transition-colors bg-gray-100 rounded-lg px-7 hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10 w-full sm:w-auto">
                 <svg
                   width="20"
@@ -76,14 +109,25 @@ export default function SignInForm() {
                   Or
                 </span>
               </div>
-            </div>
+            </div> */}
             <form onSubmit={handleSubmit}>
               <div className="space-y-6">
                 <div>
                   <Label>
-                    Email <span className="text-error-500">*</span>{" "}
+                    Gmail Address <span className="text-error-500">*</span>{" "}
                   </Label>
-                  <Input placeholder="info@gmail.com" />
+                  <Input 
+                    type="email"
+                    placeholder="example@gmail.com" 
+                    value={email}
+                    onChange={handleEmailChange}
+                    className={emailError ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : ""}
+                  />
+                  {emailError && (
+                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                      {emailError}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <Label>
@@ -93,6 +137,8 @@ export default function SignInForm() {
                     <Input
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                     <span
                       onClick={() => setShowPassword(!showPassword)}
@@ -123,7 +169,8 @@ export default function SignInForm() {
                 <div>
                   <button 
                     type="submit" 
-                    className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600"
+                    disabled={!email || !password || !!emailError}
+                    className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
                     Log in
                   </button>
@@ -131,7 +178,8 @@ export default function SignInForm() {
               </div>
             </form>
 
-            <div className="mt-5">
+            {/* Sign Up Link - Commented Out */}
+            {/* <div className="mt-5">
               <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
                 Don&apos;t have an account? {""}
                 <Link
@@ -141,7 +189,7 @@ export default function SignInForm() {
                   Sign Up
                 </Link>
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
